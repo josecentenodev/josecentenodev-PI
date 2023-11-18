@@ -1,6 +1,7 @@
 const express = require("express");
+const router = require('../routes')
+const morgan = require("morgan");
 const server = express();
-const router = require('./routes')
 
 
 // Middleware para permitir solicitudes desde cualquier origen
@@ -17,8 +18,9 @@ server.use((req, res, next) => {
 
 // Middleware para analizar el cuerpo de solicitudes JSON
 server.use(express.json());
-
-// Middleware para agregar "/rickandmorty" antes de cada ruta en el enrutador
-server.use('/', router);
+// Middleware para ver peticiones por consola
+server.use(morgan("dev"));
+// Middleware para agregar "/" antes de cada ruta en el enrutador
+server.use(router);
 
 module.exports = server
