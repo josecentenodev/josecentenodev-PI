@@ -1,27 +1,24 @@
 require("dotenv").config();
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 const { Sequelize } = require("sequelize");
-// TODO: IMPORTAR CONTROLADORES
-
+const DriverModel = require("../models/Driver");
+const TeamModel = require("../models/Team");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
   { logging: false }
 );
 
-// TODO: INSTANCIAR LOS CONTROLADORES Y EXTRAERLOS DEL MODELO
-// UserModel(sequelize);
-// FavoriteModel(sequelize);
+DriverModel(sequelize);
+TeamModel(sequelize);
 
-// const { User, Favorite } = sequelize.models;
+const { Driver, Team } = sequelize.models;
 
-// TODO: HACER LAS RELACIONES
-// User.belongsToMany(Favorite, { through: "user_favorite" });
-// Favorite.belongsToMany(User, { through: "user_favorite" });
+Driver.belongsToMany(Team, { through: "driver_team" });
+Team.belongsToMany(Driver, { through: "driver_team" });
 
 module.exports = {
-    //TODO: EXPORTARLOS 
-//   User,
-//   Favorite,
+  Driver,
+  Team,
   conn: sequelize,
 };
