@@ -1,5 +1,5 @@
 const express = require("express");
-const router = require('../routes')
+const router = require('./routes')
 const morgan = require("morgan");
 const server = express();
 
@@ -21,6 +21,6 @@ server.use(express.json());
 // Middleware para ver peticiones por consola
 server.use(morgan("dev"));
 // Middleware para agregar "/" antes de cada ruta en el enrutador
-server.use(router);
+server.use('/api', router);
 
 module.exports = server
