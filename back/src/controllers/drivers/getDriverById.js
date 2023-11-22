@@ -1,7 +1,7 @@
 const {
   getDriverFromDB,
   getDriverFromAPI,
-} = require("../services/getDriverByIdService");
+} = require("../../services/getDriverByIdService");
 
 async function getDriverById(req, res) {
   try {

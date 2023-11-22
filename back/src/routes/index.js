@@ -1,8 +1,12 @@
 // Importar controladores
-const getDrivers = require("../controllers/getDrivers");
-const getDriverById = require("../controllers/getDriverById");
-const createDriver = require("../controllers/createDriver");
-const deleteDriver = require("../controllers/deleteDriver");
+// drivers
+const getDrivers = require("../controllers/drivers/getDrivers");
+const getDriverById = require("../controllers/drivers/getDriverById");
+const createDriver = require("../controllers/drivers/createDriver");
+const deleteDriver = require("../controllers/drivers/deleteDriver");
+// teams
+const getTeams = require("../controllers/teams/getTeams");
+
 // Crear Router de Express
 const express = require("express");
 const router = express.Router();
@@ -14,7 +18,7 @@ router.post("/drivers", createDriver);
 router.delete("/drivers/:id", deleteDriver);
 
 // teams routes
-
+router.get('/teams', getTeams)
 // router.post('/', ()=>{});
 // router.post('/', ()=>{});
 // router.post('/', ()=>{});

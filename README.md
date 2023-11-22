@@ -49,45 +49,51 @@ La idea de este proyecto es construir una aplicación web a partir de la API [**
 -  Dar de Alta (Crear) nuevo corredor.
 ⚠️ Para las funcionalidades de filtrado y ordenamiento NO se puede utilizar los endpoints de la API externa que ya devuelven los resultados filtrados u ordenados.
 
-**IMPORTANTE**: 
-### Únicos end-point que se pueden utilizar
+**CONSTRUCCION DE PROYECTO**: 
+### Paso a paso de lo hecho hasta ahora
+<br />
 
-  - GET http://localhost:5000/drivers
-  - GET http://localhost:5000/drivers?name.forename={name}
-  - GET http://localhost:5000/drivers/:{id}
+- Configuración inicial: Creamos un servidor Express y configuramos middleware para manejar solicitudes CORS, analizar cuerpos JSON y registrar solicitudes en la consola.
+  
+- Integración con JSON Server: Conectamos la aplicación a una API externa simulada mediante JSON Server para proporcionar datos adicionales de corredores.
+  
+- Modelado de datos: Definimos el modelo "Driver" utilizando Sequelize para representar la estructura de los corredores de Fórmula 1.
+
+- Trabajo con Sequelize y PostgreSQL: Implementamos funciones para interactuar con la base de datos PostgreSQL utilizando Sequelize, y escribimos pruebas para el modelo "Driver".
+
+- Rutas y controladores: Establecimos rutas para obtener todos los corredores, obtener un corredor por ID, buscar corredores por nombre y crear nuevos corredores. Desarrollamos controladores correspondientes para manejar estas operaciones.
+  
+- Pruebas unitarias: Utilizamos supertest para escribir pruebas unitarias para las rutas de la API, verificando el código de estado, la estructura de las respuestas y otras condiciones.
+
+- Manejo de errores: Mejoramos la gestión de errores en los controladores para devolver códigos de estado adecuados y mensajes significativos.
+
+- Refactorización y ajustes: Realizamos ajustes en la estructura del código y refactorizamos funciones para mejorar la claridad y la eficiencia del código.
 
 ---
 
 <br />
 
-## **📁 INSTRUCCIONES**
+## **📁 DATA SEEDING**
 
-### **🖱 BASE DE DATOS**
+### **🖱 Consulta a la Base de Datos**
 
-Deberás crear dos modelos para tu base de datos. Una será para los conductores y la otra será para los equipos o escuderías de fórmula uno (pueden llevar el nombre que tu quieras). La relación entre ambos modelos debe ser de muchos a muchos. A continuación te dejamos las propiedades que debe tener cada modelo.
+- Antes de hacer el data seeding, consulta si hay registros existentes en la tabla "Teams". Puedes usar el modelo de Sequelize para esto.
 
-**📍 MODELO 1 | Drivers**
+#### Decisión de Data Seeding:
 
--  ID (deben ser distintos a los que vienen de la API). \*
--  Nombre. \*
--  Apellido. \*
--  Descripción. \*
--  Imagen. \*
--  Nacionalidad. \*
--  Fecha de Nacimiento. \*
+- Si no hay registros, procede con el data seeding desde la API. Si hay registros, no necesitas hacer nada.
 
-<br />
+#### Data Seeding desde la API:
 
-**📍 MODELO 2 | Teams**
+- Iterar sobre los objetos de la API.
 
--  ID. \*
--  Nombre. \*
+- Para cada equipo en la propiedad 'teams', sepáralos y verifica si ya existe un equipo con ese nombre en la base de datos antes de agregarlo.
 
-<br />
+#### Creación de Registros:
 
----
+- Crea un registro para cada equipo que no existe en la base de datos.
 
-<br />
+
 
 ### **🖱 BACK-END**
 

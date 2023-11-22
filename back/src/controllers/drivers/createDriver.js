@@ -1,4 +1,4 @@
-const { Driver } = require("../db");
+const { Driver } = require("../../db");
 const { v4: uuidv4 } = require("uuid");
 
 async function createDriver(req, res) {
