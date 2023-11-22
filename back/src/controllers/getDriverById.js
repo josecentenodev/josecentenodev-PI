@@ -1,15 +1,25 @@
-const axios = require("axios");
+const {
+  getDriverFromDB,
+  getDriverFromAPI,
+} = require("../services/getDriverByIdService");
 
 async function getDriverById(req, res) {
-  console.log(isNaN(Number(req.params.id)))
   try {
     const id = req.params.id;
-    const API_URL = `http://localhost:5000/drivers/${id}`;
-    const response = await axios.get(API_URL);
-    res.json(response.data);
+    // de manera descriptiva identifico si el id que me llega por param es de tipo uuid,
+    const isIdDataTypeUUID = isNaN(Number(id));
+    if (isIdDataTypeUUID) {
+      // si es uuid hago la peticion a la base de datos
+      const driver = await getDriverFromDB(id)
+      res.status(200).json(driver);
+    } else {
+      // caso contrario a mi api
+      const driver = await getDriverFromAPI(id)
+      res.status(200).json(driver);
+    }
   } catch (error) {
     // Lo dejo en manos de json-server
-    res.status(error.response.status).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 }
 
