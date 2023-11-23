@@ -1,4 +1,4 @@
-const { Driver } = require("../db");
+const { Driver, Team } = require("../db");
 const { Op } = require("sequelize");
 const axios = require("axios");
 
@@ -12,6 +12,13 @@ async function getDriversByName(name) {
         },
       },
       limit: 15,
+      include: {
+        model: Team,
+        attributes: ["id", "nombre"],
+        through: {
+          attributes: [],
+        },
+      },
     });
 
     // Consulta a la API externa
@@ -23,7 +30,7 @@ async function getDriversByName(name) {
           driver.name.forename.toLowerCase().includes(name.toLowerCase())
       )
       .slice(0, 15);
-      
+
     //TODO: Se puede extraer la logica de este map en una funcion helper
     const driversWithImage = apiDrivers.map((driver) => ({
       ...driver,
@@ -52,7 +59,15 @@ async function getDriversByName(name) {
 async function getAllDrivers() {
   try {
     // Consulta a la base de datos usando Sequelize
-    const dbDrivers = await Driver.findAll();
+    const dbDrivers = await Driver.findAll({
+      include: {
+        model: Team,
+        attributes: ["id", "nombre"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
 
     // Consulta a la API externa
     const apiResponse = await axios.get(`http://localhost:5000/drivers`);

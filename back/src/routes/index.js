@@ -21,10 +21,7 @@ router.delete("/drivers/:id", deleteDriver);
 // teams routes
 router.get("/teams", getTeams);
 router.post("/teams", createTeam);
-// router.post('/', ()=>{});
-// router.post('/', ()=>{});
-// router.post('/', ()=>{});
-// router.post('/', ()=>{});
+
 
 // Exportar el router
 module.exports = router;

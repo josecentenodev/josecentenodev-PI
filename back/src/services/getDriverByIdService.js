@@ -1,9 +1,18 @@
-const { Driver } = require("../db");
+const { Driver, Team } = require("../db");
 const axios = require("axios");
 
 async function getDriverFromDB(id) {
   try {
-    const driver = await Driver.findOne({ where: { id: id } });
+    const driver = await Driver.findOne({
+      where: { id: id },
+      include: {
+        model: Team,
+        attributes: ["id", "nombre"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
     return driver;
   } catch (error) {
     // Manejar el error según sea necesario
