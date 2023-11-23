@@ -6,6 +6,7 @@ const createDriver = require("../controllers/drivers/createDriver");
 const deleteDriver = require("../controllers/drivers/deleteDriver");
 // teams
 const getTeams = require("../controllers/teams/getTeams");
+const createTeam = require("../controllers/teams/createTeam");
 
 // Crear Router de Express
 const express = require("express");
@@ -18,7 +19,8 @@ router.post("/drivers", createDriver);
 router.delete("/drivers/:id", deleteDriver);
 
 // teams routes
-router.get('/teams', getTeams)
+router.get("/teams", getTeams);
+router.post("/teams", createTeam);
 // router.post('/', ()=>{});
 // router.post('/', ()=>{});
 // router.post('/', ()=>{});
