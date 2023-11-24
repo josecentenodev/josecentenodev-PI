@@ -9,7 +9,7 @@
 
 En este proyecto la API de Drivers **corre localmente desde tu computadora**. 
 
-Para lograr que esta API funcione desde tu computadora deberás dirigirte, desde tu terminal, a la back y ejecutar el comando:
+Para lograr que esta API funcione, luego de instalar dependencias correspondientes, deberás dirigirte desde tu terminal a la back y ejecutar el comando:
 
 ```bash
    npm start
@@ -19,18 +19,18 @@ Podrás ver el siguiente mensaje en tu terminal.
 
 ``` 
 [0] 
-[0] > server@1.0.0 server
+[0] > back@1.0.0 server
 [0] > nodemon index.js
 [0] 
 [1] 
-[1] > server@1.0.0 api
+[1] > back@1.0.0 api
 [1] > echo 'Local API listening on PORT 5000' & json-server --watch api/db.json -p 5000 -q
 [1] 
 [1] 'Local API listening on PORT 5000' 
-[0] [nodemon] 2.0.22
+[0] [nodemon] 3.0.1
 [0] [nodemon] to restart at any time, enter `rs`
 [0] [nodemon] watching path(s): *.*
-[0] [nodemon] watching extensions: js,mjs,json
+[0] [nodemon] watching extensions: js,mjs,cjs,json
 [0] [nodemon] starting `node index.js`
 [0] Server listening on port 3001
 
@@ -40,40 +40,63 @@ Esto significa que la API ya está corriendo en tu computadora en el puerto 5000
 
 ## **📖 ENUNCIADO GENERAL**
 
-La idea de este proyecto es construir una aplicación web a partir de la API [**drivers**] en la que se pueda:
+La idea de este proyecto es una aplicación web a partir de la API [**drivers**] en la que se puede:
 
 -  Buscar corredores.
 -  Visualizar la información de los corredores.
 -  Filtrarlos.
 -  Ordenarlos.
 -  Dar de Alta (Crear) nuevo corredor.
-⚠️ Para las funcionalidades de filtrado y ordenamiento NO se puede utilizar los endpoints de la API externa que ya devuelven los resultados filtrados u ordenados.
+<br />
+<br />
 
-**CONSTRUCCION DE PROYECTO**: 
+# CONSTRUCCION DE PROYECTO: 
 ### Paso a paso de lo hecho hasta ahora
 <br />
 
-- Configuración inicial: Creamos un servidor Express y configuramos middleware para manejar solicitudes CORS, analizar cuerpos JSON y registrar solicitudes en la consola.
+# Backend:
+### Modelos y Base de Datos:
+
+- Creación de modelos Driver y Team para representar pilotos y equipos.
+- Configuración de la relación muchos a muchos entre Driver y Team.
+
+### Controladores:
+
+- Implementación de controladores para operaciones CRUD en pilotos.
+
+### Rutas y Express:
+
+- Configuración de rutas en Express para cada controlador.
+- Uso de Sequelize para interactuar con la base de datos.
+
+### Data Seeding:
+
+- Implementación de funciones para realizar seeding de datos desde la API de F1 para pilotos y equipos.
+
+### Testing con Jest:
+
+Creación de pruebas unitarias para rutas.
+
+# Frontend (Hasta ahora):
+
+### Styled Components:
+
+- Configuración e implementación de Styled Components para el diseño de componentes.
   
-- Integración con JSON Server: Conectamos la aplicación a una API externa simulada mediante JSON Server para proporcionar datos adicionales de corredores.
+### Landing Page:
+
+- Creación de una landing page con una imagen de fondo estilo Formula 1 y un botón de acceso.
   
-- Modelado de datos: Definimos el modelo "Driver" utilizando Sequelize para representar la estructura de los corredores de Fórmula 1.
+### Efectos Visuales:
 
-- Trabajo con Sequelize y PostgreSQL: Implementamos funciones para interactuar con la base de datos PostgreSQL utilizando Sequelize, y escribimos pruebas para el modelo "Driver".
-
-- Rutas y controladores: Establecimos rutas para obtener todos los corredores, obtener un corredor por ID, buscar corredores por nombre y crear nuevos corredores. Desarrollamos controladores correspondientes para manejar estas operaciones.
-  
-- Pruebas unitarias: Utilizamos supertest para escribir pruebas unitarias para las rutas de la API, verificando el código de estado, la estructura de las respuestas y otras condiciones.
-
-- Manejo de errores: Mejoramos la gestión de errores en los controladores para devolver códigos de estado adecuados y mensajes significativos.
-
-- Refactorización y ajustes: Realizamos ajustes en la estructura del código y refactorizamos funciones para mejorar la claridad y la eficiencia del código.
+- Uso de filtros de CSS para aplicar un ligero blur a la imagen de fondo.
+- Animación de clic en el botón para mejorar la experiencia del usuario.
 
 ---
 
 <br />
 
-## **📁 DATA SEEDING**
+## **📁 TEAMS DATA SEEDING**
 
 ### **🖱 Consulta a la Base de Datos**
 
@@ -94,61 +117,9 @@ La idea de este proyecto es construir una aplicación web a partir de la API [**
 - Crea un registro para cada equipo que no existe en la base de datos.
 
 
-
-### **🖱 BACK-END**
-
-Para esta parte deberás construir un servidor utilizando **NodeJS** y **Express**. Tendrás que conectarlo con tu base de datos mediante **Sequelize**.
-
-Tu servidor deberá contar con las siguientes rutas:
-
-#### **📍 GET | /drivers**
-
--  Obtiene un arreglo de objetos, donde cada objeto es un driver con su información.
-
- IMPORTANTE: Si un driver no tiene imagen, deberás colocarle una por defecto 🖼️
-
-#### **📍 GET | /drivers/:idDriver**
-
--  Esta ruta obtiene el detalle de un driver específico. Es decir que devuelve un objeto con la información pedida en el detalle de un driver.
--  El driver es recibido por parámetro (ID).
--  Tiene que incluir los datos del/los team/s del driver al que está asociado.
--  Debe funcionar tanto para los drivers de la API como para los de la base de datos.
-
-#### **📍 GET | /drivers/name?="..."**
-
--  Esta ruta debe obtener los primeros 15 drivers que se encuentren con la palabra recibida por query.
--  Debe poder buscarlo independientemente de mayúsculas o minúsculas.
--  Si no existe el driver, debe mostrar un mensaje adecuado.
--  Debe buscar tanto los de la API como los de la base de datos.
-
-#### **📍 POST | /drivers**
-
--  Esta ruta recibirá todos los datos necesarios para crear un driver y relacionarlo con sus teams solicitados.
--  Toda la información debe ser recibida por body.
--  Debe crear un driver en la base de datos, y este debe estar relacionado con sus teams indicados (al menos uno).
-
-#### **📍 GET | /teams**
-
--  Obtiene un arreglo con todos los teams existentes de la API.
--  En una primera instancia, cuando la base de datos este vacía, deberás guardar todos los teams que encuentres en la API.
--  Estos deben ser obtenidos de la API (se evaluará que no haya hardcodeo). Luego de obtenerlos de la API, deben ser guardados en la base de datos para su posterior consumo desde allí.
-
 <br />
 
----
-
-<br />
-
-### **🖱 FRONT-END**
-
-Se debe desarrollar una aplicación utilizando **React** y **Redux** que contenga las siguientes vistas:
-
-**📍 LANDING PAGE |** deberás crear una página de inicio o bienvenida con:
-
--  Alguna imagen de fondo representativa al proyecto.
--  Botón para ingresar a la **`home page`**.
-
-<br />
+**⚠️ IMPORTANTE**
 
 **📍 HOME PAGE |** la página principal de tu SPA debe contener:
 

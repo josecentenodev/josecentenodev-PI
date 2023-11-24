@@ -12,6 +12,12 @@ const App = () => {
             <Landing />
           }
         />
+        <Route
+          path="/home"
+          element={
+            <Home />
+          }
+        />
     </Routes>
   )
 }
