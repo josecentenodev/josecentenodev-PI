@@ -26,7 +26,7 @@ conn
         id: "e95182e8-f409-4eea-84e4-f9548a0b5de6",
         nombre: "Jose",
         apellido: "Centeno",
-        imagen: "url_de_la_imagen",
+        imagen: "https://ansarorthospinalhospital.com/wp-content/uploads/2020/05/blank-head-profile-pic-for-a-man.jpg",
         nacionalidad: "Argentino",
         descripcion: "El primer Driver",
         fechaNacimiento: "1993-10-14",
