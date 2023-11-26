@@ -26,7 +26,8 @@ conn
         id: "e95182e8-f409-4eea-84e4-f9548a0b5de6",
         nombre: "Jose",
         apellido: "Centeno",
-        imagen: "https://ansarorthospinalhospital.com/wp-content/uploads/2020/05/blank-head-profile-pic-for-a-man.jpg",
+        // Descubri que habia una imagen random en la api que era como una por defecto y decidi incorporarla como por defecto tambien para los que no tengan imagen
+        imagen: "https://cdn.pixabay.com/photo/2013/07/12/15/36/motorsports-150157_960_720.png",
         nacionalidad: "Argentino",
         descripcion: "El primer Driver",
         fechaNacimiento: "1993-10-14",
