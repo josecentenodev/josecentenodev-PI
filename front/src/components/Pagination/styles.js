@@ -1,15 +1,28 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+
+export const Wrapper = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 10px;
+gap: 100px;
+`
+export const InputWrapper = styled.div`
+display: flex;
+gap: 10px;
+`
+
 
 export const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  gap: 10px
 `;
 
 export const PageButton = styled.button`
-  background-color: ${({ active }) => (active ? '#007BFF' : '#f4f4f4')};
-  color: ${({ active }) => (active ? '#fff' : '#393c41')};
+  background-color: ${({ active }) => (active ? "#007BFF" : "#f4f4f4")};
+  color: ${({ active }) => (active ? "#fff" : "#393c41")};
   font-size: 12px;
   font-weight: 300;
   padding: 5px 10px;
@@ -23,18 +36,40 @@ export const PageButton = styled.button`
   }
 `;
 
-export const NavButton = styled.button`
-  background-color: #007BFF;
-  color: #fff;
-  font-size: 12px;
+export const PageInput = styled.input`
+  outline: none;
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+`;
+
+export const ConfirmButton = styled.button`
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color ease 0.3s;
+  padding: 4px 8px;
+  border-radius: 4px;
+  min-width: 50px;
+  text-align: center;
   font-weight: 500;
-  padding: 5px 10px;
+  border: none;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+`;
+
+export const NavButton = styled.button`
+  background-color: #fff;
+  font-size: 25px;
+  font-weight: 500;
   border: none;
   cursor: pointer;
   border-radius: 4px;
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
   }
 `;
+
