@@ -13,9 +13,9 @@ const NavBar = () => {
     <StyledNavBar>
       <Logo>Formula 1</Logo>
       <NavItems>
-        <NavItem>Pilotos</NavItem>
-        <NavItem>Equipos</NavItem>
-        <NavItem>Info</NavItem>
+        <NavItem to={'/home'}>Pilotos</NavItem>
+        <NavItem to={'/teams'}>Equipos</NavItem>
+        <NavItem to={'/info'}>Info</NavItem>
       </NavItems>
       <SearchInputContainer>
         <SearchInput />

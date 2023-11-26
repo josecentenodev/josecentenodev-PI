@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import Driver from "../Driver";
 import { GridContainer } from "./styles";
-import useDrivers from "../../hooks/useDrivers";
 
 
 const Drivers = ({drivers}) => {

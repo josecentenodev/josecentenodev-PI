@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const StyledNavBar = styled.nav`
 display: flex;
@@ -19,7 +20,9 @@ display: flex;
 margin-left: 24px;
 `;
 
-export const NavItem = styled.div`
+export const NavItem = styled(NavLink)`
+text-decoration: none;
+color: #393c41;
 margin-right: 12px;
 cursor: pointer;
 transition: background-color ease 0.3s;
