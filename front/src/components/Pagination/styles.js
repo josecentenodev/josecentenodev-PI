@@ -23,7 +23,7 @@ export const PaginationWrapper = styled.div`
 export const PageButton = styled.button`
   background-color: ${({ active }) => (active ? "#007BFF" : "#f4f4f4")};
   color: ${({ active }) => (active ? "#fff" : "#393c41")};
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 300;
   padding: 5px 10px;
   border: none;
@@ -53,6 +53,7 @@ export const ConfirmButton = styled.button`
   min-width: 50px;
   text-align: center;
   font-weight: 500;
+  font-size: 16px;
   border: none;
 
   &:hover {

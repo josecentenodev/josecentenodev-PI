@@ -29,7 +29,7 @@ const Detail = () => {
   return (
     <>
       <InfoTitle>{`${driver?.nombre ? driver.nombre : driver?.name?.forename} ${
-        driver?.apellido ? driver.nombre : driver?.name?.surname
+        driver?.apellido ? driver?.apellido : driver?.name?.surname
       }`}</InfoTitle>
       <InfoContainer>
         <DriverImage
@@ -56,8 +56,8 @@ const Detail = () => {
             <TeamList>
               <Teams>Escuderías:</Teams>
               {driver?.teams
-                ? driver.teams
-                : driver?.Team?.map((team) => (
+                ? driver?.teams
+                : driver?.Teams?.map((team) => (
                     <TeamItem key={team.id}>{team.nombre}</TeamItem>
                   ))}
             </TeamList>

@@ -1,15 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Drivers from "../../components/Drivers";
 import Pagination from "../../components/Pagination";
+import Filters from "../../components/Filters";
 import useDrivers from "../../hooks/useDrivers";
 import usePagination from "../../hooks/usePagination";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllDrivers } from "../../redux/actions";
+import {
+  DataToolsWrapper
+} from "./styles";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { getDrivers } = useDrivers();
-  const drivers = useSelector((state)=> state.allDrivers)
+  const drivers = useSelector((state) => state.allDrivers);
+
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      try {
+        const drivers = await getDrivers();
+        dispatch(setAllDrivers(drivers));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDrivers();
+  }, []);
+
   const {
     currentPage,
     nextPage,
@@ -19,23 +36,9 @@ const Home = () => {
     setCurrentPage,
   } = usePagination(drivers, 9);
 
-  useEffect(() => {
-    const fetchDrivers = async () => {
-      try {
-        const drivers = await getDrivers();
-        console.log('all drivers: ', drivers)
-
-        dispatch(setAllDrivers(drivers))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchDrivers()
-  }, []);
-
   return (
     <>
-      <Drivers drivers={dataToRender} />
+      <DataToolsWrapper>
       <Pagination
         prevPage={prevPage}
         nextPage={nextPage}
@@ -43,6 +46,9 @@ const Home = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
+      <Filters />
+      </DataToolsWrapper>
+      <Drivers drivers={dataToRender} />
     </>
   );
 };
