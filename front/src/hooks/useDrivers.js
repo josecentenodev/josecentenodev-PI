@@ -4,15 +4,7 @@ import axios from "axios";
 export default function useDrivers() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [drivers, setDrivers] = useState([]);
-  const [driver, setDriver] = useState({
-    id: "",
-    nombre: "",
-    apellido: "",
-    imagen: "",
-    fechaNacimiento: "",
-    nacionalidad: "",
-    teams: [],
-  });
+  const [driver, setDriver] = useState({});
 
   const getDrivers = async () => {
     try {

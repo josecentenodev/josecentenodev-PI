@@ -48,7 +48,7 @@ export const DriverImage = styled.img`
   width: 300px;
   height: 300px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
 `;
 
 export const TeamList = styled.ul`

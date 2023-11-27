@@ -1,6 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import Driver from "../Driver";
+import DriverCard from "../DriverCard";
 import { GridContainer } from "./styles";
 
 
@@ -10,7 +10,7 @@ const Drivers = ({drivers}) => {
   return (
     <GridContainer>
       {drivers.map((driver) => (
-        <Driver
+        <DriverCard
           id={driver.id}
           key={uuidv4()}
           nombre={driver.nombre || driver.name.forename}

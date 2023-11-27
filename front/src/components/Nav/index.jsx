@@ -8,7 +8,11 @@ import {
   SearchInputContainer,
 } from "./styles";
 
+import { useLocation } from "react-router-dom";
+
 const NavBar = () => {
+  let location = useLocation();
+  
   return (
     <StyledNavBar>
       <Logo>Formula 1</Logo>

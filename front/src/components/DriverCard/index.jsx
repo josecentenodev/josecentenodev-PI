@@ -14,7 +14,7 @@ import {
 } from "./styles";
 import { v4 as uuidv4 } from "uuid";
 
-const Driver = ({ id, nombre, apellido, imagen, teams, fechaNacimiento }) => {
+const DriverCard = ({ id, nombre, apellido, imagen, teams, fechaNacimiento }) => {
   const teamsArray = Array.isArray(teams)
     ? teams
     : teams.split(",").map((team) => ({
@@ -47,4 +47,4 @@ const Driver = ({ id, nombre, apellido, imagen, teams, fechaNacimiento }) => {
   );
 };
 
-export default Driver;
+export default DriverCard;
