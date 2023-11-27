@@ -3,9 +3,13 @@ import Drivers from "../../components/Drivers";
 import Pagination from "../../components/Pagination";
 import useDrivers from "../../hooks/useDrivers";
 import usePagination from "../../hooks/usePagination";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllDrivers } from "../../redux/actions";
 
 const Home = () => {
-  const { drivers, getDrivers } = useDrivers();
+  const dispatch = useDispatch();
+  const { getDrivers } = useDrivers();
+  const drivers = useSelector((state)=> state.allDrivers)
   const {
     currentPage,
     nextPage,
@@ -16,7 +20,17 @@ const Home = () => {
   } = usePagination(drivers, 9);
 
   useEffect(() => {
-    getDrivers();
+    const fetchDrivers = async () => {
+      try {
+        const drivers = await getDrivers();
+        console.log('all drivers: ', drivers)
+
+        dispatch(setAllDrivers(drivers))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchDrivers()
   }, []);
 
   return (

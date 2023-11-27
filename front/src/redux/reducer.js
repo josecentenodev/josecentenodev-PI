@@ -6,7 +6,7 @@ const initialState = {
 
 const driversReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_DRIVERS':
+    case 'SET_DRIVERS':
       return {
         ...state,
         allDrivers: action.payload,

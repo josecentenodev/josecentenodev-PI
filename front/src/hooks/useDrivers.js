@@ -3,13 +3,12 @@ import axios from "axios";
 
 export default function useDrivers() {
   const API_URL = import.meta.env.VITE_API_URL;
-  const [drivers, setDrivers] = useState([]);
   const [driver, setDriver] = useState({});
 
   const getDrivers = async () => {
     try {
       const { data } = await axios(`${API_URL}/drivers`);
-      return data ? setDrivers(data) : window.alert("woops! algo fallo!");
+      return data
     } catch (error) {
       console.error("Error en getDrivers:", error);
     }
@@ -25,5 +24,5 @@ export default function useDrivers() {
     }
   };
 
-  return { driver, drivers, getDrivers, getDriver };
+  return { driver, getDrivers, getDriver };
 }
