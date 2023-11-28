@@ -15,9 +15,21 @@ const driversReducer = (state = initialState, action) => {
       };
     case 'APPLY_FILTERS':
       console.log(action.payload)
+      let filteredDrivers = state.allDrivers
       const {teamName, sortOrder, includeDB, includeAPI} = action.payload
+      if(teamName) {
+        filteredDrivers = filteredDrivers.filter((driver) => {
+          const teams = driver.teams || driver.Teams
+          if (Array.isArray(teams)) {
+            return teams.some((team) => team.nombre === teamName);
+          } else {
+            return driver.teams?.includes(teamName)
+          }
+        });
+      }
+
       return {...state, 
-        filteredDrivers: []
+        filteredDrivers
       }
     default:
       return state;

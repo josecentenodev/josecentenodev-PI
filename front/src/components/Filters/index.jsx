@@ -32,7 +32,7 @@ const Filters = () => {
             name="team"
             onChange={handleFilter}
           >
-            <StyledOption value="DEFAULT">Todas las Escuderías</StyledOption>
+            <StyledOption value="">Todas las Escuderías</StyledOption>
             {teams &&
               teams.map((team) => {
                 return <StyledOption key={team.id} value={team.nombre}>{team.nombre}</StyledOption>;
@@ -46,7 +46,7 @@ const Filters = () => {
             onChange={handleFilter}
             name="name"
           >
-            <StyledOption value="DEFAULT"></StyledOption>
+            <StyledOption value=""></StyledOption>
             <StyledOption value="ASC">Ascendente</StyledOption>
             <StyledOption value="DESC">Descendente</StyledOption>
           </StyledSelect>
@@ -58,7 +58,7 @@ const Filters = () => {
             onChange={handleFilter}
             name="dob"
           >
-            <StyledOption value="DEFAULT"></StyledOption>
+            <StyledOption value=""></StyledOption>
             <StyledOption value="ASC">Ascendente</StyledOption>
             <StyledOption value="DESC">Descendente</StyledOption>
           </StyledSelect>

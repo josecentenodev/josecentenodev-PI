@@ -12,7 +12,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const { drivers } = useDrivers();
 
-  const allDrivers = useSelector((state) => state.allDrivers);
+  const allDrivers = useSelector((state) => state.filteredDrivers);
 
   useEffect(() => {
     dispatch(setAllDrivers(drivers));
