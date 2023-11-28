@@ -3,8 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import DriverCard from "../DriverCard";
 import { GridContainer } from "./styles";
 
-
-const Drivers = ({drivers}) => {
+const Drivers = ({ drivers }) => {
 
 
   return (

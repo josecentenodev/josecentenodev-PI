@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import getDrivers from "../services/getDrivers";
 
 export default function useDrivers() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [driver, setDriver] = useState({});
+  const [drivers, setDrivers] = useState([]);
 
-  const getDrivers = async () => {
-    try {
-      const { data } = await axios(`${API_URL}/drivers`);
-      return data
-    } catch (error) {
-      console.error("Error en getDrivers:", error);
-    }
-  };
+  useEffect(() => {
+    getDrivers().then((drivers) => {
+      setDrivers(drivers);
+    });
+  }, [setDrivers]);
 
   const getDriver = async (id) => {
     try {
@@ -20,9 +19,9 @@ export default function useDrivers() {
 
       return data ? setDriver(data) : window.alert("woops! algo fallo!");
     } catch (error) {
-      console.error("Error en getDrivers:", error);
+      console.error("Error en getDriver:", error);
     }
   };
 
-  return { driver, getDrivers, getDriver };
+  return { driver, drivers, getDriver };
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useTeams from "../../hooks/useTeams";
+import useFilters from "../../hooks/useFilters";
 import {
   InputWrapper,
   DropdownWrapper,
@@ -11,15 +12,10 @@ import {
   StyledOption,
 } from "./styles";
 
-const Filters = ({
-  includeDB,
-  includeAPI,
-  handleTeam,
-  handleSort,
-  handleOrigin,
-}) => {
+const Filters = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { teams } = useTeams();
+  const { includeAPI, includeDB, handleFilter } = useFilters();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -33,9 +29,10 @@ const Filters = ({
           <StyledLabel htmlFor="team">Escuderías:</StyledLabel>
           <StyledSelect
             id="team"
-            onChange={handleTeam}
+            name="team"
+            onChange={handleFilter}
           >
-            <StyledOption value="ALL">Todas las Escuderías</StyledOption>
+            <StyledOption value="DEFAULT">Todas las Escuderías</StyledOption>
             {teams &&
               teams.map((team) => {
                 return <StyledOption key={team.id} value={team.nombre}>{team.nombre}</StyledOption>;
@@ -46,10 +43,10 @@ const Filters = ({
           <StyledLabel htmlFor="namesort">Ordenar por Nombre:</StyledLabel>
           <StyledSelect
             id="namesort"
-            onChange={handleSort}
-            name="namesort"
+            onChange={handleFilter}
+            name="name"
           >
-            <StyledOption value=""></StyledOption>
+            <StyledOption value="DEFAULT"></StyledOption>
             <StyledOption value="ASC">Ascendente</StyledOption>
             <StyledOption value="DESC">Descendente</StyledOption>
           </StyledSelect>
@@ -58,10 +55,10 @@ const Filters = ({
           <StyledLabel htmlFor="fecsort">Ordenar por Nacimiento:</StyledLabel>
           <StyledSelect
             id="fecsort"
-            onChange={handleSort}
-            name="fecsort"
+            onChange={handleFilter}
+            name="dob"
           >
-            <StyledOption value=""></StyledOption>
+            <StyledOption value="DEFAULT"></StyledOption>
             <StyledOption value="ASC">Ascendente</StyledOption>
             <StyledOption value="DESC">Descendente</StyledOption>
           </StyledSelect>
@@ -73,7 +70,7 @@ const Filters = ({
             id="dbCheckbox"
             name="dbOrigin"
             checked={includeDB}
-            onChange={handleOrigin}
+            onChange={handleFilter}
           />
           <StyledLabel htmlFor="apiCheckbox">API</StyledLabel>
           <PageInput
@@ -81,7 +78,7 @@ const Filters = ({
             id="apiCheckbox"
             name="apiOrigin"
             checked={includeAPI}
-            onChange={handleOrigin}
+            onChange={handleFilter}
           />
         </InputWrapper>
       </DropdownContent>
