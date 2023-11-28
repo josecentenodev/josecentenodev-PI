@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import useTeams from "../../hooks/useTeams";
 import {
   InputWrapper,
   DropdownWrapper,
   Dropbtn,
   DropdownContent,
+  StyledLabel,
+  PageInput,
+  StyledSelect,
+  StyledOption,
 } from "./styles";
 
 const Filters = ({
@@ -14,6 +19,8 @@ const Filters = ({
   handleOrigin,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { teams } = useTeams();
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -23,47 +30,56 @@ const Filters = ({
       <Dropbtn onClick={toggleDropdown}>Filtros</Dropbtn>
       <DropdownContent style={{ display: isOpen ? "flex" : "none" }}>
         <InputWrapper>
-          <label htmlFor="team">Escuderías:</label>
-          <select
+          <StyledLabel htmlFor="team">Escuderías:</StyledLabel>
+          <StyledSelect
             id="team"
             onChange={handleTeam}
           >
-            <option value="">Todas las Escuderías</option>
-            {/* Agregar opciones de teams dinámicamente si es necesario */}
-          </select>
+            <StyledOption value="ALL">Todas las Escuderías</StyledOption>
+            {teams &&
+              teams.map((team) => {
+                return <StyledOption key={team.id} value={team.nombre}>{team.nombre}</StyledOption>;
+              })}
+          </StyledSelect>
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="sort">Ordenar por Nombre:</label>
-          <select
-            id="sort"
+          <StyledLabel htmlFor="namesort">Ordenar por Nombre:</StyledLabel>
+          <StyledSelect
+            id="namesort"
             onChange={handleSort}
+            name="namesort"
           >
-            <option value="asc">Ascendente</option>
-            <option value="desc">Descendente</option>
-          </select>
+            <StyledOption value=""></StyledOption>
+            <StyledOption value="ASC">Ascendente</StyledOption>
+            <StyledOption value="DESC">Descendente</StyledOption>
+          </StyledSelect>
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="sort">Ordenar por Apellido:</label>
-          <select
-            id="sort"
+          <StyledLabel htmlFor="fecsort">Ordenar por Nacimiento:</StyledLabel>
+          <StyledSelect
+            id="fecsort"
             onChange={handleSort}
+            name="fecsort"
           >
-            <option value="asc">Ascendente</option>
-            <option value="desc">Descendente</option>
-          </select>
+            <StyledOption value=""></StyledOption>
+            <StyledOption value="ASC">Ascendente</StyledOption>
+            <StyledOption value="DESC">Descendente</StyledOption>
+          </StyledSelect>
         </InputWrapper>
         <InputWrapper>
-          <label htmlFor="dbCheckbox">Base de Datos</label>
-          <input
+          <StyledLabel htmlFor="dbCheckbox">Base de Datos</StyledLabel>
+          <PageInput
             type="checkbox"
             id="dbCheckbox"
+            name="dbOrigin"
             checked={includeDB}
             onChange={handleOrigin}
           />
-          <label htmlFor="apiCheckbox">API</label>
-          <input
+          <StyledLabel htmlFor="apiCheckbox">API</StyledLabel>
+          <PageInput
             type="checkbox"
             id="apiCheckbox"
+            name="apiOrigin"
             checked={includeAPI}
             onChange={handleOrigin}
           />

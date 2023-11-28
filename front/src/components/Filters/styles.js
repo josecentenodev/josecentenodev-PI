@@ -39,8 +39,32 @@ export const DropdownContent = styled.div`
   padding: 0 24px;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 400px;
+  min-width: 350px;
   height: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+`;
+
+export const StyledLabel = styled.label`
+  font-weight: 400;
+  color: #393c41;
+`;
+export const PageInput = styled.input`
+  outline: none;
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+`;
+
+export const StyledOption = styled.option`
+color: #393c41;
+padding: 15px;
+`;
+
+export const StyledSelect = styled.select`
+  outline: none;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 `;
