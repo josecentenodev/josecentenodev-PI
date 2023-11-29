@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useDrivers from "../../hooks/useDrivers";
+import useSingleDriver from "../../hooks/useSingleDriver";
 import { v4 as uuidv4, validate } from "uuid";
 import {
   TeamList,
@@ -19,13 +19,8 @@ import {
 
 const Detail = () => {
   let { id } = useParams();
-  const { driver, getDriver } = useDrivers();
+  const { driver } = useSingleDriver(id);
 
-  useEffect(() => {
-    getDriver(id);
-  }, []);
-
-  console.log(driver);
   return (
     <>
       <InfoTitle>{`${driver?.nombre ? driver.nombre : driver?.name?.forename} ${

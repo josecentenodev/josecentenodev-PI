@@ -78,6 +78,9 @@ const driversReducer = (state = initialState, action) => {
       }
 
       return { ...state, filteredDrivers: filteredDrivers };
+    case "GET_DRIVERS_BY_NAME":
+      const driversByName = action.payload;
+      return { ...state, filteredDrivers: driversByName };
     default:
       return state;
   }

@@ -38,10 +38,11 @@ export const PageButton = styled.button`
 
 export const PageInput = styled.input`
   outline: none;
-  width: 80px;
-  padding: 5px;
+  width: 100px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
+  font-weight: 500;
 `;
 
 export const ConfirmButton = styled.button`
@@ -55,6 +56,7 @@ export const ConfirmButton = styled.button`
   font-weight: 500;
   font-size: 16px;
   border: none;
+  min-width: 100px;
 
   &:hover {
     background-color: #f2f2f2;
