@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import useTeams from "../../hooks/useTeams";
+import useDrivers from "../../hooks/useDrivers";
 import Button from "../Button";
+import { useNavigate } from "react-router-dom";
 import {
   StyledTitle,
   StyledForm,
   InputWrapper,
   StyledLabel,
   StyledInput,
-  StyledTextArea
+  StyledTextArea,
 } from "./styles";
 
 const Form = ({ type, driver }) => {
+  const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false);
+  const { createDriver, updateDriver } = useDrivers();
   const { teams } = useTeams();
   const [form, setForm] = useState({
     nombre: driver?.nombre || "",
@@ -20,20 +24,66 @@ const Form = ({ type, driver }) => {
     nacionalidad: driver?.nacionalidad || "",
     fechaNacimiento: driver?.fechaNacimiento || "",
     descripcion: driver?.descripcion || "",
-    escuderias: driver?.escuderias || [],
+    teamIds: driver?.Teams || [],
   });
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    console.log(form)
-  };
 
   const handleInputChange = (fieldName, value) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
   };
 
   const handleTeamChange = (e) => {
-    const selectedTeams = Array.from(e.target.selectedOptions, (option) => option.value);
-    handleInputChange("escuderias", selectedTeams);
+    const selectedTeams = Array.from(e.target.selectedOptions, (option) =>
+      Number(option.value)
+    );
+    handleInputChange("teamIds", selectedTeams);
+  };
+
+  const handleChangeImage = (e) => {
+    e.preventDefault();
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.includes("image")) {
+      alert("Please upload an image!");
+
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const result = reader.result;
+
+      handleInputChange("imagen", 'url_de_imagen');
+    };
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    console.log(form)
+    setSubmitting(true);
+    try {
+      type === "Crear"
+        ? createDriver(form)
+        : type === "Editar"
+        ? updateDriver(form, driver?.id)
+        : alert("Formulario no reconocido");
+    } catch (error) {
+      console.log("trycatchform", error);
+      alert(
+        `Algo falló al ${
+          type === "Crear" ? "crear" : "editar"
+        } el Piloto. Intenta de nuevo!`
+      );
+    } finally {
+      setSubmitting(false);
+      alert('Usuario creado correctamente')
+      navigate('/home')
+    }
   };
 
   return (
@@ -63,6 +113,7 @@ const Form = ({ type, driver }) => {
             type="file"
             accept="image/*"
             required={type === "Crear" ? true : false}
+            onChange={(e) => handleChangeImage(e)}
           />
         </InputWrapper>
         <InputWrapper>
@@ -85,21 +136,31 @@ const Form = ({ type, driver }) => {
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Descripcion</StyledLabel>
-          <StyledTextArea type="text"
+          <StyledTextArea
+            type="text"
             value={form.descripcion}
-            onChange={(e) => handleInputChange("descripcion", e.target.value)}/>
+            onChange={(e) => handleInputChange("descripcion", e.target.value)}
+          />
         </InputWrapper>
         <InputWrapper>
-        <StyledLabel>Escuderias</StyledLabel>
-        <StyledInput as="select" multiple value={form.escuderias} onChange={handleTeamChange}>
-          {/* Renderizar opciones de escuderías aquí */}
-          {teams.map((team) => (
-            <option key={team.id} value={team.id}>
-              {team.nombre}
-            </option>
-          ))}
-        </StyledInput>
-      </InputWrapper>
+          <StyledLabel>Escuderias</StyledLabel>
+          <StyledInput
+            as="select"
+            multiple
+            value={form.teamIds}
+            onChange={handleTeamChange}
+          >
+            {/* Renderizar opciones de escuderías aquí */}
+            {teams.map((team) => (
+              <option
+                key={team.id}
+                value={team.id}
+              >
+                {team.nombre}
+              </option>
+            ))}
+          </StyledInput>
+        </InputWrapper>
         <Button
           title={
             submitting
