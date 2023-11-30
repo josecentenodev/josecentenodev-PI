@@ -16,6 +16,7 @@ const NavBar = () => {
       <Logo>Formula 1</Logo>
       <NavItems>
         <NavItem to={"/home"}>Pilotos</NavItem>
+        <NavItem to={"/crear"}>Crear Piloto</NavItem>
         <NavItem to={"/info"}>Info</NavItem>
       </NavItems>
       <SearchInputContainer>

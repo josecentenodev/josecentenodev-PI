@@ -4,6 +4,7 @@ import NavBar from './components/Nav';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Detail from './pages/Detail'
+import Crear from './pages/Crear'
 
 const App = () => {
   let location = useLocation()
@@ -24,6 +25,7 @@ const App = () => {
             <Home />
           }
         />
+        <Route path='/crear' element={<Crear />} />
         <Route
           path="drivers/:id"
           element={<Detail />}
