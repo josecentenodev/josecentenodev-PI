@@ -3,6 +3,7 @@ import uploadImage from "../../services/uploadImage";
 import useTeams from "../../hooks/useTeams";
 import useDrivers from "../../hooks/useDrivers";
 import Button from "../Button";
+import FormImage from "../FormImage";
 import { useNavigate } from "react-router-dom";
 import {
   StyledTitle,
@@ -114,6 +115,7 @@ const Form = ({ type, driver }) => {
             required={type === "Crear" ? true : false}
             onChange={(e) => handleChangeImage(e)}
           />
+          {form.imagen && <FormImage src={form.imagen}/>}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Nacionalidad</StyledLabel>
