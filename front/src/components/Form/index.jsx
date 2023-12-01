@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import uploadImage from "../../services/uploadImage";
 import useTeams from "../../hooks/useTeams";
 import useDrivers from "../../hooks/useDrivers";
 import Button from "../Button";
@@ -13,7 +14,7 @@ import {
 } from "./styles";
 
 const Form = ({ type, driver }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const { createDriver, updateDriver } = useDrivers();
   const { teams } = useTeams();
@@ -38,7 +39,7 @@ const Form = ({ type, driver }) => {
     handleInputChange("teamIds", selectedTeams);
   };
 
-  const handleChangeImage = (e) => {
+  const handleChangeImage = async (e) => {
     e.preventDefault();
 
     const file = e.target.files?.[0];
@@ -50,21 +51,19 @@ const Form = ({ type, driver }) => {
 
       return;
     }
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-
-    reader.onload = () => {
-      const result = reader.result;
-
-      handleInputChange("imagen", 'url_de_imagen');
-    };
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const { imageUrl } = await uploadImage(formData);
+      handleInputChange("imagen", imageUrl);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(form)
+    console.log(form);
     setSubmitting(true);
     try {
       type === "Crear"
@@ -81,8 +80,8 @@ const Form = ({ type, driver }) => {
       );
     } finally {
       setSubmitting(false);
-      alert('Usuario creado correctamente')
-      navigate('/home')
+      alert("Usuario creado correctamente");
+      navigate("/home");
     }
   };
 

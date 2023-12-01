@@ -6,7 +6,7 @@ const getSingleDriver = async (id) => {
     const { data } = await axios(`${API_URL}/drivers/${id}`);
     return data;
   } catch (error) {
-    console.error("Error en getDriver:", error);
+    console.error("Error en getSingleDriver:", error);
   }
 };
 

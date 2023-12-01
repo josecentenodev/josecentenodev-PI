@@ -6,7 +6,7 @@ const postDriver = async (driver) => {
     const { data } = await axios.post(`${API_URL}/drivers/`, driver);
     return data;
   } catch (error) {
-    console.error("Error en getDriver:", error);
+    console.error("Error en postDriver:", error);
   }
 };
 

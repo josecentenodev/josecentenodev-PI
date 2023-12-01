@@ -6,7 +6,7 @@ const getDrivers = async () => {
     const { data } = await axios(`${API_URL}/drivers`);
     return data;
   } catch (error) {
-    console.error("Error en getTeams:", error);
+    console.error("Error en getDrivers:", error);
   }
 };
 
