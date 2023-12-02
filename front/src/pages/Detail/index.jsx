@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useSingleDriver from "../../hooks/useSingleDriver";
 import { v4 as uuidv4, validate } from "uuid";
 import {
@@ -15,11 +16,17 @@ import {
   InfoNationality,
   InfoDescription,
   InlineContainer,
+  ButtonsContainer
 } from "./styles";
+import Button from "../../components/Button";
 
 const Detail = () => {
   let { id } = useParams();
   const { driver } = useSingleDriver(id);
+  const navigate = useNavigate()
+  const handleClick = () => {
+    navigate(`/editar/${id}`)
+  }
 
   return (
     <>
@@ -37,7 +44,8 @@ const Detail = () => {
           <InlineContainer>
             <InfoDoB>{`Nacimiento: ${
               driver?.fechaNacimiento ? driver?.fechaNacimiento : driver.dob
-            }`}</InfoDoB>.
+            }`}</InfoDoB>
+            .
             <InfoNationality>
               {driver?.nacionalidad
                 ? driver?.nacionalidad
@@ -57,6 +65,21 @@ const Detail = () => {
                   ))}
             </TeamList>
           </TeamsContainer>
+          {validate(id) && <ButtonsContainer>
+            <Button
+              title="Editar"
+              RightIcon={" 📝"}
+              handleClick={handleClick}
+              isSubmitting={false}
+            />
+            <Button
+              title="Eliminar"
+              RightIcon={" 🗑️"}
+              handleClick={() => {}}
+              isSubmitting={false}
+            />
+          </ButtonsContainer>}
+          
         </DriverInfo>
       </InfoContainer>
     </>

@@ -8,6 +8,7 @@ export const StyledButton = styled.button`
   padding: 4px 8px;
   border-radius: 4px;
   min-width: 100px;
+  max-width: 200px;
   text-align: center;
   font-weight: 500;
   font-size: 20px;

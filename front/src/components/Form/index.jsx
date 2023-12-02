@@ -29,6 +29,7 @@ const Form = ({ type, driver }) => {
     teamIds: driver?.Teams || [],
   });
 
+
   const handleInputChange = (fieldName, value) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
   };

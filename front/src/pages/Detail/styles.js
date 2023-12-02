@@ -74,3 +74,9 @@ export const InfoDescription = styled.p`
   font-size: 18px;
   width: 500px;
 `;
+export const ButtonsContainer = styled.p`
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+`;
