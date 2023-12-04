@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import getDrivers from "../services/getDrivers";
 import postDriver from "../services/postDriver";
+import putDriver from "../services/putDriver";
 
 export default function useDrivers() {
   const [drivers, setDrivers] = useState([]);
@@ -16,7 +17,7 @@ export default function useDrivers() {
   }
 
   const updateDriver = (updatedDriver, driverID) => {
-    console.log(updatedDriver, driverID)
+    putDriver(updatedDriver, driverID)
   }
 
   

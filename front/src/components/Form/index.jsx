@@ -29,7 +29,6 @@ const Form = ({ type, driver }) => {
     teamIds: driver?.Teams || [],
   });
 
-
   const handleInputChange = (fieldName, value) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
   };
@@ -82,8 +81,10 @@ const Form = ({ type, driver }) => {
       );
     } finally {
       setSubmitting(false);
-      alert("Usuario creado correctamente");
-      navigate("/home");
+      if (type === "Crear") {
+        alert("Usuario creado correctamente");
+        navigate("/home");
+      }
     }
   };
 
@@ -116,7 +117,7 @@ const Form = ({ type, driver }) => {
             required={type === "Crear" ? true : false}
             onChange={(e) => handleChangeImage(e)}
           />
-          {form.imagen && <FormImage src={form.imagen}/>}
+          {form.imagen && <FormImage src={form.imagen} />}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Nacionalidad</StyledLabel>
