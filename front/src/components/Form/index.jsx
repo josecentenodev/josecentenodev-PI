@@ -85,6 +85,11 @@ const Form = ({ type, driver }) => {
         alert("Usuario creado correctamente");
         navigate("/home");
       }
+
+      if (type === "Editar") {
+        alert("Usuario actualizado correctamente");
+        navigate("/home");
+      }
     }
   };
 

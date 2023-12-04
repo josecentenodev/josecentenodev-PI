@@ -24,8 +24,11 @@ const Detail = () => {
   let { id } = useParams();
   const { driver } = useSingleDriver(id);
   const navigate = useNavigate()
-  const handleClick = () => {
+  const handleEditClick = () => {
     navigate(`/editar/${id}`)
+  }
+  const handleDeleteClick = () => {
+    alert(id)
   }
 
   return (
@@ -69,13 +72,13 @@ const Detail = () => {
             <Button
               title="Editar"
               RightIcon={" 📝"}
-              handleClick={handleClick}
+              handleClick={handleEditClick}
               isSubmitting={false}
             />
             <Button
               title="Eliminar"
               RightIcon={" 🗑️"}
-              handleClick={() => {}}
+              handleClick={handleDeleteClick}
               isSubmitting={false}
             />
           </ButtonsContainer>}
