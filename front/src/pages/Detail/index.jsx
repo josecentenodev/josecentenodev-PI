@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useSingleDriver from "../../hooks/useSingleDriver";
+import deleteDriver from "../../services/deleteDriver";
 import { v4 as uuidv4, validate } from "uuid";
 import {
   TeamList,
@@ -24,11 +25,27 @@ const Detail = () => {
   let { id } = useParams();
   const { driver } = useSingleDriver(id);
   const navigate = useNavigate()
+
   const handleEditClick = () => {
     navigate(`/editar/${id}`)
   }
+
+  const confirmDelete = () => {
+    const isConfirmed = window.confirm('¿Estás seguro que deseas eliminar el conductor?');
+    if(isConfirmed) {
+      try {
+        deleteDriver(id)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        alert("Conductor eliminado correctamente");
+        navigate('/home')
+      }
+    }
+  }
+
   const handleDeleteClick = () => {
-    alert(id)
+    confirmDelete()
   }
 
   return (

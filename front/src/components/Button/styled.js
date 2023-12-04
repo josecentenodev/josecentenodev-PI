@@ -18,4 +18,8 @@ export const StyledButton = styled.button`
   &:hover {
     background-color: #f2f2f2;
   }
+
+  &:disabled {
+    opacity: 0.4;
+  }
 `;

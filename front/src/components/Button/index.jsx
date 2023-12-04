@@ -1,10 +1,11 @@
 import React from "react";
 import {StyledButton} from './styled'
 
+
 const Button = ({
   title,
   type,
-  isSubmitting,
+  isDisabled,
   handleClick,
   LeftIcon,
   RightIcon,
@@ -14,7 +15,7 @@ const Button = ({
     // pero deberia investigar para ver como seria la mejor manera con styled components
     <StyledButton
       type={type || "button"}
-      disabled={isSubmitting}
+      disabled={isDisabled}
       onClick={handleClick}
     >
       {LeftIcon && LeftIcon}

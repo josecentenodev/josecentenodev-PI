@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import uploadImage from "../../services/uploadImage";
 import useTeams from "../../hooks/useTeams";
 import useDrivers from "../../hooks/useDrivers";
 import Button from "../Button";
 import FormImage from "../FormImage";
 import { useNavigate } from "react-router-dom";
+import useValidation from "../../hooks/useValidation";
 import {
   StyledTitle,
   StyledForm,
@@ -16,7 +17,7 @@ import {
 
 const Form = ({ type, driver }) => {
   const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
+  const [hasValues, setHasValues] = useState(false)
   const { createDriver, updateDriver } = useDrivers();
   const { teams } = useTeams();
   const [form, setForm] = useState({
@@ -28,9 +29,19 @@ const Form = ({ type, driver }) => {
     descripcion: driver?.descripcion || "",
     teamIds: driver?.Teams || [],
   });
+  const { validate, errors, isDisabled, setIsDisabled } = useValidation();
+  
+  useEffect(() => {
+    setIsDisabled(true)
+    setHasValues(Object.values(form).every((valor) => Boolean(valor)))
+  }, []);
+
+
+  const disableButton = isDisabled && !hasValues
 
   const handleInputChange = (fieldName, value) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
+    validate(fieldName, value);
   };
 
   const handleTeamChange = (e) => {
@@ -49,7 +60,7 @@ const Form = ({ type, driver }) => {
 
     if (!file.type.includes("image")) {
       alert("Please upload an image!");
-
+      handleInputChange("imagen", "errorDeFormato.error");
       return;
     }
     const formData = new FormData();
@@ -62,15 +73,22 @@ const Form = ({ type, driver }) => {
     }
   };
 
+  const confirmEdit = () => {
+    const isConfirmed = window.confirm("¿Estás seguro que deseas editar?");
+    if (isConfirmed) {
+      updateDriver(form, driver?.id);
+    }
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(form);
-    setSubmitting(true);
+    setIsDisabled(true);
     try {
       type === "Crear"
         ? createDriver(form)
         : type === "Editar"
-        ? updateDriver(form, driver?.id)
+        ? confirmEdit()
         : alert("Formulario no reconocido");
     } catch (error) {
       console.log("trycatchform", error);
@@ -80,14 +98,13 @@ const Form = ({ type, driver }) => {
         } el Piloto. Intenta de nuevo!`
       );
     } finally {
-      setSubmitting(false);
       if (type === "Crear") {
-        alert("Usuario creado correctamente");
+        alert("Conductor creado correctamente");
         navigate("/home");
       }
 
       if (type === "Editar") {
-        alert("Usuario actualizado correctamente");
+        alert("Conductor actualizado correctamente");
         navigate("/home");
       }
     }
@@ -101,59 +118,84 @@ const Form = ({ type, driver }) => {
           <StyledLabel>Nombre</StyledLabel>
           <StyledInput
             type="text"
+            name="nombre"
             value={form.nombre}
             onChange={(e) => handleInputChange("nombre", e.target.value)}
           />
+          {errors.nombre && (
+            <span style={{ color: "red" }}>{errors.nombre}</span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Apellido</StyledLabel>
           <StyledInput
             type="text"
+            name="apellido"
             value={form.apellido}
             onChange={(e) => handleInputChange("apellido", e.target.value)}
           />
+          {errors.apellido && (
+            <span style={{ color: "red" }}>{errors.apellido}</span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Imagen</StyledLabel>
           <input
             id="image"
             type="file"
+            name="imagen"
             accept="image/*"
             required={type === "Crear" ? true : false}
             onChange={(e) => handleChangeImage(e)}
           />
           {form.imagen && <FormImage src={form.imagen} />}
+          {errors.imagen && (
+            <span style={{ color: "red" }}>{errors.imagen}</span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Nacionalidad</StyledLabel>
           <StyledInput
             type="text"
+            name="nacionalidad"
             value={form.nacionalidad}
             onChange={(e) => handleInputChange("nacionalidad", e.target.value)}
           />
+          {errors.nacionalidad && (
+            <span style={{ color: "red" }}>{errors.nacionalidad}</span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Fecha de Nacimiento</StyledLabel>
           <StyledInput
             type="date"
+            name="fechaNacimiento"
             value={form.fechaNacimiento}
             onChange={(e) =>
               handleInputChange("fechaNacimiento", e.target.value)
             }
           />
+          {errors.fechaNacimiento && (
+            <span style={{ color: "red" }}>{errors.fechaNacimiento}</span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Descripcion</StyledLabel>
           <StyledTextArea
             type="text"
+            name="descripcion"
             value={form.descripcion}
             onChange={(e) => handleInputChange("descripcion", e.target.value)}
           />
+          {errors.descripcion && (
+            <span style={{ color: "red" }}>{errors.descripcion}</span>
+          )}
         </InputWrapper>
         <InputWrapper>
           <StyledLabel>Escuderias</StyledLabel>
           <StyledInput
             as="select"
+            name="teamIds"
             multiple
             value={form.teamIds}
             onChange={handleTeamChange}
@@ -168,16 +210,19 @@ const Form = ({ type, driver }) => {
               </option>
             ))}
           </StyledInput>
+          {errors.teamsIds && (
+            <span style={{ color: "red" }}>{errors.teamsIds}</span>
+          )}
         </InputWrapper>
         <Button
           title={
-            submitting
-              ? `${type === "Crear" ? "Creando" : "Editando"}`
+            disableButton
+              ? `${type === "Crear" ? "Crear..." : "Editar..."}`
               : `${type === "Crear" ? "Crear" : "Editar"}`
           }
           type="submit"
-          RightIcon={submitting ? "" : "🚘"}
-          isSubmitting={submitting}
+          RightIcon={disableButton ? "" : "🚘"}
+          isDisabled={disableButton}
         />
       </StyledForm>
     </>
