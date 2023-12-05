@@ -17,7 +17,6 @@ import {
 
 const Form = ({ type, driver }) => {
   const navigate = useNavigate();
-  const [hasValues, setHasValues] = useState(false)
   const { createDriver, updateDriver } = useDrivers();
   const { teams } = useTeams();
   const [form, setForm] = useState({
@@ -29,19 +28,32 @@ const Form = ({ type, driver }) => {
     descripcion: driver?.descripcion || "",
     teamIds: driver?.Teams || [],
   });
-  const { validate, errors, isDisabled, setIsDisabled } = useValidation();
-  
+  const { validate, errors, setErrors, checkIsFullfilled, checkEmptyFields } = useValidation();
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
   useEffect(() => {
-    setIsDisabled(true)
-    setHasValues(Object.values(form).every((valor) => Boolean(valor)))
-  }, []);
+    const isFormFullfilled = checkIsFullfilled(form)
+    console.log('talleno: ', isFormFullfilled)
 
+    const isErrorsEmpty = checkEmptyFields(errors)
+    console.log('tavacio: ', isErrorsEmpty)
 
-  const disableButton = isDisabled && !hasValues
+    if(isFormFullfilled && isErrorsEmpty) {
+      setIsDisabled(false)
+    }
+
+  }, [form, errors, setErrors, isDisabled, setIsDisabled]);
 
   const handleInputChange = (fieldName, value) => {
     setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
     validate(fieldName, value);
+    if (!value.length && fieldName !== 'teamIds') {
+      setErrors({
+        ...errors,
+        [fieldName]: "",
+      });
+    }
   };
 
   const handleTeamChange = (e) => {
@@ -210,19 +222,19 @@ const Form = ({ type, driver }) => {
               </option>
             ))}
           </StyledInput>
-          {errors.teamsIds && (
-            <span style={{ color: "red" }}>{errors.teamsIds}</span>
+          {errors.teamIds && (
+            <span style={{ color: "red" }}>{errors.teamIds}</span>
           )}
         </InputWrapper>
         <Button
           title={
-            disableButton
+            isDisabled
               ? `${type === "Crear" ? "Crear..." : "Editar..."}`
               : `${type === "Crear" ? "Crear" : "Editar"}`
           }
           type="submit"
-          RightIcon={disableButton ? "" : "🚘"}
-          isDisabled={disableButton}
+          RightIcon={isDisabled ? "" : "🚘"}
+          isDisabled={isDisabled}
         />
       </StyledForm>
     </>
