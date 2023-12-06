@@ -1,4 +1,5 @@
-import React from "react";
+// nav.jsx
+import React, { useState } from "react";
 import SearchInput from "../SearchInput";
 import {
   Logo,
@@ -6,22 +7,37 @@ import {
   NavItems,
   NavItem,
   SearchInputContainer,
+  MobileIcon,
+  NavMenu,
 } from "./styles";
 
-
 const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <StyledNavBar>
       <Logo>Formula 1</Logo>
-      <NavItems>
-        <NavItem to={"/home"}>Pilotos</NavItem>
-        <NavItem to={"/crear"}>Crear Piloto</NavItem>
-        <NavItem to={"/info"}>Info</NavItem>
-      </NavItems>
-      <SearchInputContainer>
-        <SearchInput />
-      </SearchInputContainer>
+      <MobileIcon onClick={toggleMenu}>&#9776;</MobileIcon>
+      <NavMenu isOpen={isOpen}>
+        <NavItems>
+          <NavItem to={"/home"} onClick={toggleMenu}>
+            Pilotos
+          </NavItem>
+          <NavItem to={"/crear"} onClick={toggleMenu}>
+            Crear Piloto
+          </NavItem>
+          <NavItem to={"/info"} onClick={toggleMenu}>
+            Info
+          </NavItem>
+        </NavItems>
+        <SearchInputContainer>
+          <SearchInput />
+        </SearchInputContainer>
+      </NavMenu>
     </StyledNavBar>
   );
 };

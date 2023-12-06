@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const usePagination = (data, itemsPerPage) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = data.length > 0 ? Math.ceil(data.length / itemsPerPage) : 1;
 
   const nextPage = () => {
     if (currentPage < totalPages) {

@@ -11,13 +11,18 @@ export const CardWrapper = styled.div`
   border-radius: 8px;
   margin: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 550px;
+  max-width: 650px;
   display: flex;
   gap: 10px;
   transition: transform 0.3s ease;
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
   }
 `;
 

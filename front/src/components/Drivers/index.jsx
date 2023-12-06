@@ -2,9 +2,10 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import DriverCard from "../DriverCard";
 import { GridContainer } from "./styles";
+import NotDrivers from "../NotDrivers";
 
 const Drivers = ({ drivers }) => {
-
+  if (!drivers.length) return <NotDrivers />
 
   return (
     <GridContainer>

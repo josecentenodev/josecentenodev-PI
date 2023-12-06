@@ -43,6 +43,10 @@ export const DropdownContent = styled.div`
   height: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+
+  @media screen and (max-width: 1240px) {
+    right: 0;
+  }
 `;
 
 export const StyledLabel = styled.label`

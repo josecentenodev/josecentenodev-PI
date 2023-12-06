@@ -4,8 +4,13 @@ export const Wrapper = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
+margin: 25px;
 padding: 10px;
 gap: 100px;
+
+@media (max-width: 1420px) {
+    gap: 25px;
+  }
 `
 export const InputWrapper = styled.div`
 display: flex;

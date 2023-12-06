@@ -6,7 +6,7 @@ export const StyledTitle = styled.h1`
 `;
 
 export const StyledForm = styled.form`
-  width: 90%;
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;

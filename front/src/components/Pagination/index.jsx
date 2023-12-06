@@ -53,6 +53,7 @@ const Pagination = ({
           {currentPage === totalPages ? `⛔` : `👉🏻`}
         </NavButton>
       </PaginationWrapper>
+
       <InputWrapper>
         <PageInput
           type="text"
