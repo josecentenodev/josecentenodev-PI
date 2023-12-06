@@ -6,6 +6,7 @@ import Landing from './pages/Landing';
 import Detail from './pages/Detail'
 import Crear from './pages/Create'
 import Editar from './pages/Edit'
+import Info from './pages/Info'
 
 const App = () => {
   let location = useLocation()
@@ -24,6 +25,12 @@ const App = () => {
           path="/home"
           element={
             <Home />
+          }
+        />
+        <Route
+          path="/info"
+          element={
+            <Info />
           }
         />
         <Route path='/crear' element={<Crear />} />

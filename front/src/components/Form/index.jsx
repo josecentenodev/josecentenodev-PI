@@ -41,6 +41,8 @@ const Form = ({ type, driver }) => {
 
     if(isFormFullfilled && isErrorsEmpty) {
       setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
     }
 
   }, [form, errors, setErrors, isDisabled, setIsDisabled]);
