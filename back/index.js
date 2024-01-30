@@ -1,7 +1,7 @@
 const server = require("./src/app");
 const { conn, Driver, Team } = require("./src/db.js");
 const { seedTeamsFromAPI } = require("./src/services/getTeamsService");
-const PORT = 3001;
+const PORT = 10000;
 
 conn
   .sync({ force: true })
