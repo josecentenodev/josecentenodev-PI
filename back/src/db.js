@@ -6,7 +6,7 @@ const TeamModel = require("./models/Team");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  { logging: false }
+  { logging: false, ssl: true }
 );
 
 DriverModel(sequelize);
